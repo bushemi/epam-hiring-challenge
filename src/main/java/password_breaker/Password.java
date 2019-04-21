@@ -28,6 +28,15 @@ public class Password {
         } else {
             current += (isNull(next) ? "" : next.getCurrentLetter());
         }
+        showIfAllLettersAreZ(current);
         return current;
     }
+
+    private void showIfAllLettersAreZ(String text) {
+        for (char letter : text.toCharArray()) {
+            if (letter != 'z') return;
+        }
+        System.out.println("text = " + text);
+    }
+
 }
