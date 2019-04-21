@@ -32,4 +32,10 @@ public class HashCalculator {
 }
 ```
 
-More complicated task: 4fd0101ea3d0f5abbe296ef97f47afec
+More complicated task: `4fd0101ea3d0f5abbe296ef97f47afec`
+
+Answers:
+
+regular task - zebra
+
+complicated task - titkos 

@@ -8,7 +8,7 @@ import org.junit.runners.JUnit4;
 public class PasswordTest {
     private HashCalculator calculator = new HashCalculator();
     private String target = "69c459dd76c6198f72f0c20ddd3c9447"; //zebra
-    private String targetAdvanced = "4fd0101ea3d0f5abbe296ef97f47afec";
+    private String targetAdvanced = "4fd0101ea3d0f5abbe296ef97f47afec"; //titkos
 
     @Test
     public void findPasswordRegular() {

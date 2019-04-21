@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 class BrutForce {
     private static HashCalculator calculator = new HashCalculator();
     private static final String TARGET = "69c459dd76c6198f72f0c20ddd3c9447"; //zebra
-    private static final String TARGET_ADVANCED = "4fd0101ea3d0f5abbe296ef97f47afec";
+    private static final String TARGET_ADVANCED = "4fd0101ea3d0f5abbe296ef97f47afec"; // titkos
     private ThreadPoolExecutor executor;
 
     private String unHashedTarget = new String();
