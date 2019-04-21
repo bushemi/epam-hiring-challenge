@@ -11,7 +11,7 @@ public class BrutForceTest {
 
     @Test
     public void testFindPasswordRegular() throws Exception {
-        BrutForce bf = new BrutForce(40);
+        BrutForce bf = new BrutForce(10);
         System.out.println("start");
         long before = System.currentTimeMillis();
         bf.findPasswordRegular();
@@ -23,7 +23,7 @@ public class BrutForceTest {
 
     @Test
     public void findPasswordAdvancedLevel() throws Exception {
-        BrutForce bf = new BrutForce(40);
+        BrutForce bf = new BrutForce(10);
         System.out.println("start");
         long before = System.currentTimeMillis();
         bf.findPasswordAdvancedLevel();

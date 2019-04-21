@@ -16,7 +16,7 @@ class BrutForce {
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(numberOfThreads);
     }
 
-    void findPasswordRegular() {
+    void findPasswordRegular() throws InterruptedException {
         Password password = new Password();
         while (true) {
             executor.submit(() -> {
@@ -24,14 +24,16 @@ class BrutForce {
                 if (checkForMatch(text)) unHashedTarget = text;
                 return null;
             });
-
+            if (executor.getQueue().size() > 10000) {
+                Thread.sleep(10);
+            }
             if (!unHashedTarget.isEmpty()) break;
         }
         System.out.println("unHashedTarget = " + unHashedTarget);
         executor.shutdown();
     }
 
-    void findPasswordAdvancedLevel() {
+    void findPasswordAdvancedLevel() throws InterruptedException {
         Password password = new Password();
         while (true) {
             executor.submit(() -> {
@@ -41,6 +43,9 @@ class BrutForce {
             });
 
             if (!unHashedTargetAdvanced.isEmpty()) break;
+            if (executor.getQueue().size() > 10000) {
+                Thread.sleep(10);
+            }
         }
         System.out.println("unHashedTargetAdvanced = " + unHashedTargetAdvanced);
         executor.shutdown();
