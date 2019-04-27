@@ -6,7 +6,7 @@ import java.util.Random;
 public class RandomResponseGenerator extends ResponseGenerator {
     private Random random = new Random();
 
-    RandomResponseGenerator(List<String> responses) {
+    public RandomResponseGenerator(List<String> responses) {
         super(responses);
     }
 
