@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 public class RandomResponseGeneratorTest {
-    RandomResponseGenerator generator = new RandomResponseGenerator(Arrays.asList("123", "test", "abc"));
+    private RandomResponseGenerator generator = new RandomResponseGenerator(Arrays.asList("123", "test", "abc"));
 
     @Test
     public void getResponse() throws Exception {
