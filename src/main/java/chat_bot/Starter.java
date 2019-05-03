@@ -5,6 +5,9 @@ import chat_bot.responses.ResponseGenerator;
 
 import java.util.List;
 import java.util.MissingFormatArgumentException;
+import java.util.Scanner;
+
+import static java.util.Objects.isNull;
 
 public class Starter {
 
@@ -12,8 +15,9 @@ public class Starter {
     private static final String MY_NAME = "[Я] ";
     private static final String FILE_NAME_MARKER = "-f";
     private static final String STRATEGY_MARKER = "-r";
+    private static final String START_OF_LINE = "> ";
+    private static final String END_OF_CONVERSATION = "пока";
 
-    private static Strategy currentStrategy;
     private static ResponseGenerator random;
     private static ResponseGenerator up;
     private static ResponseGenerator down;
@@ -23,12 +27,18 @@ public class Starter {
         String fileName = getParameterFromArray(args, FILE_NAME_MARKER);
         Strategy initialStrategy = Strategy.fromString(getParameterFromArray(args, STRATEGY_MARKER));
 
-        System.out.println("initial strategy = " + initialStrategy);
         List<String> strings = FileLoader.readFileInList(fileName);
         random = new RandomResponseGenerator(strings);
-        currentStrategy = Strategy.RANDOM;
         ResponseGenerator generator;
-        switch (currentStrategy) {
+
+        generator = getResponseGeneratorForStrategy(initialStrategy);
+
+        talk(generator);
+    }
+
+    private static ResponseGenerator getResponseGeneratorForStrategy(Strategy initialStrategy) {
+        ResponseGenerator generator;
+        switch (initialStrategy) {
             case RANDOM:
             case UP_SEQUENCE:
             case DOWN_SEQUENCE:
@@ -36,7 +46,52 @@ public class Starter {
                 generator = random;
                 break;
         }
-        System.out.println(BOTS_NAME + generator.getResponse());
+        return generator;
+    }
+
+    private static void talk(ResponseGenerator generator) {
+        Strategy currentStrategy;
+
+        showBotsMessage("Hello");
+        System.out.println();
+        showStartOfClientsLine();
+
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()) {
+            String newLine = scanner.nextLine();
+            if (newLine.equalsIgnoreCase(END_OF_CONVERSATION)) {
+                showBotsMessage(END_OF_CONVERSATION);
+                break;
+            }
+            String response = generator.getResponse();
+
+            int indexOf = newLine.toLowerCase().indexOf("стратегия:".toLowerCase());
+            if (indexOf >= 0) {
+
+                int beginIndex = indexOf + 11;
+                if (beginIndex <= newLine.length()) {
+                    String newStrategy = newLine.substring(beginIndex);
+                    response += " Использую стратегию: " + newStrategy;
+                    currentStrategy = Strategy.fromString(newStrategy);
+                    if (isNull(currentStrategy)) {
+                        response = "У тебя в голове мозги или кю?!";
+                    } else {
+                        generator = getResponseGeneratorForStrategy(currentStrategy);
+                    }
+                }
+            }
+            showBotsMessage(response);
+            System.out.println();
+            showStartOfClientsLine();
+        }
+    }
+
+    private static void showStartOfClientsLine() {
+        System.out.print(START_OF_LINE + MY_NAME);
+    }
+
+    private static void showBotsMessage(String message) {
+        System.out.print(START_OF_LINE + BOTS_NAME + message);
     }
 
     private static String getParameterFromArray(String[] args, String parameterName) {
