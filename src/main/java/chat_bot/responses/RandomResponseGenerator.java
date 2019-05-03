@@ -12,6 +12,9 @@ public class RandomResponseGenerator extends ResponseGenerator {
 
     @Override
     public String getResponse() {
-        return responses.get(random.nextInt(responses.size()));
+        int size = responses.size();
+        if (size < 1) return "";
+        int index = random.nextInt(size);
+        return responses.get(index);
     }
 }
